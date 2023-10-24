@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function new(){
-        ////
+        ///
+        ///
+        /// ELO ELO
+        ///
+        ///
     }
 
     public function delete(){
