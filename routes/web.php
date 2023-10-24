@@ -41,6 +41,8 @@ Route::controller(AdminController::class)->group(function ()
 {
     Route::get('/admin/rolelist', 'roleList');
 
+
+
     Route::get('/admin/delete', 'delete');
 
     Route::get('/admin/new', 'new');
