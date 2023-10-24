@@ -26,4 +26,8 @@ class Order extends Model
             'order_pizzas'
         );
     }
+
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
 }

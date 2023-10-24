@@ -21,7 +21,7 @@
                 </strong>
             </p>
         </article>
-        @if($pizzas === null)
+        @if($var === null)
             <h3>
                 Zamówienie jest puste
             </h3>
@@ -29,10 +29,10 @@
             <h1>
                 Zawartość zamówienia
             </h1>
-            @foreach($pizzas as $pizza)
+            @foreach($var as $v)
                 <article>
                     <h1>
-                        {{ $pizza->name }} - {{ $pizza->size }} - {{ $pizza->price }}
+                        {{ $v->pizza->name }} - {{ $v->size->name }} - {{ $v->pizza->price }}
                     </h1>
                 </article>
             @endforeach

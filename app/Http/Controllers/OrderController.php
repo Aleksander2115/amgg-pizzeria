@@ -33,7 +33,8 @@ class OrderController extends Controller
             'order' => $order,
             'user' => $user,
             'pizzas' => $pizzas,
-            'toppings' => $toppings
+            'toppings' => $toppings,
+            'var' => OrderPizza::where('order_id', $order_id)->get()
         ]);
     }
     public function addPizza(int $pizza_id)
@@ -80,7 +81,7 @@ class OrderController extends Controller
         # some redirect
     }
 
-    public function updateCostOfOrder(int $order_id)
+    public static function updateCostOfOrder(int $order_id)
     {
         $order = Order::find($order_id);
         $prices = $order->pizzas->pluck('price');

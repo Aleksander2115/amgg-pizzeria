@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->unique();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('pizza_id');
+            $table->unsignedBigInteger('size_id');
             $table->foreign('order_id')
                 ->references('id')
                 ->on('orders')
@@ -22,6 +23,10 @@ return new class extends Migration
             $table->foreign('pizza_id')
                 ->references('id')
                 ->on('pizzas')
+                ->onDelete('cascade');
+            $table->foreign('size_id')
+                ->references('id')
+                ->on('sizes')
                 ->onDelete('cascade');
         });
     }

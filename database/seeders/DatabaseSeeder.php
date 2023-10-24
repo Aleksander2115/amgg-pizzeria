@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\DB;
-use App\Models\{Order, OrderPizza, OrderTopping, Pizza, Role, Topping, User, UserRole};
+use App\Models\{Order, OrderPizza, OrderTopping, Pizza, Role, Size, Status, Topping, User, UserRole};
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -49,6 +49,13 @@ class DatabaseSeeder extends Seeder
         'Knapik'
     ];
 
+    private array $statuses = [
+        ['Unfinalized','This order has not yet been placed.'],
+        ['Unpaid','This order has been finalized but has not yet been paid.'],
+        ['Paid','This order has beed paid and is pending delivery.'],
+        ['Delivered','This order has been delivered.']
+    ];
+
     public function run(): void
     {
         $start = microtime(true);
@@ -58,7 +65,9 @@ class DatabaseSeeder extends Seeder
         $this->createUsers(50);
         $this->assignUserRoles();
         $this->createPizzas();
+        $this->createSizes();
         $this->createToppings();
+        $this->createStatuses();
         $this->createOrders(100);
         $this->addPizzasToOrders(200);
         $this->addToppingstoOrders(20);
@@ -130,17 +139,25 @@ class DatabaseSeeder extends Seeder
     {
         Pizza::truncate();
         $names = $this->pizzaNames;
-        $sizes = $this->pizzaSizes;
 
         for($i = 0; $i < count($names); ++$i){
             $basePrice = random_int(20,40);
-            for($j = 0; $j < count($sizes); ++$j){
-                Pizza::factory()->create([
-                    'name' => $names[$i],
-                    'price' => $basePrice+($j*5),
-                    'size' => $sizes[$j]
-                ]);
-            }
+            Pizza::factory()->create([
+                'name' => $names[$i],
+                'price' => $basePrice+($i*5)
+            ]);
+        }
+    }
+
+    private function createSizes(): void
+    {
+        Size::truncate();
+        $sizes = $this->pizzaSizes;
+
+        for($i = 0; $i < count($sizes); ++$i){
+            Size::factory()->create([
+                'name' => $sizes[$i],
+            ]);
         }
     }
 
@@ -156,6 +173,18 @@ class DatabaseSeeder extends Seeder
         }
     }
 
+    private function createStatuses()
+    {
+        Status::truncate();
+        $status = $this->statuses;
+        for($i = 0; $i < count($status); ++$i){
+            Status::factory()->create([
+                'name' => $status[$i][0],
+                'description' => $status[$i][1]
+            ]);
+        }
+    }
+
     private function createOrders(int $quantity = 1): void
     {
         Order::truncate();
@@ -163,6 +192,7 @@ class DatabaseSeeder extends Seeder
         for($i = 0;$i < $quantity;++$i){
             Order::factory()->create([
                 'user_id' => User::inRandomOrder()->first()->id,
+                'status_id' => Status::inRandomOrder()->first()->id,
                 'total_cost' => round(random_int(0,10000) / random_int(1, 100), 2),
                 'delivery_cost' => 5
             ]);
@@ -174,8 +204,9 @@ class DatabaseSeeder extends Seeder
         OrderPizza::truncate();
         for($i = 0;$i < $quantity;++$i){
             OrderPizza::factory()->create([
+                'order_id' => Order::inRandomOrder()->first()->id,
                 'pizza_id' => Pizza::inRandomOrder()->first()->id,
-                'order_id' => Order::inRandomOrder()->first()->id
+                'size_id' => Size::inRandomOrder()->first()->id
             ]);
         }
     }
@@ -193,14 +224,11 @@ class DatabaseSeeder extends Seeder
 
     private function updateAllOrderCosts()
     {
-        $orderUpdater = new OrderController();
-
         for($i = 0; $i < Order::count(); ++$i)
         {
-            $orderUpdater->updateCostOfOrder($i+1);
+            OrderController::updateCostOfOrder($i+1);
         }
     }
-
 }
 
 
