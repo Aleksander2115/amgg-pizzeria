@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\DB;
 use App\Models\{Order, OrderPizza, OrderTopping, Pizza, Role, Topping, User, UserRole};
 use Illuminate\Database\Seeder;
@@ -50,6 +51,7 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
+        $start = microtime(true);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $this->createRoles();
@@ -60,8 +62,10 @@ class DatabaseSeeder extends Seeder
         $this->createOrders(100);
         $this->addPizzasToOrders(200);
         $this->addToppingstoOrders(20);
+        $this->updateAllOrderCosts();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        var_dump(microtime(true)-$start);
     }
 
     private function createRoles(): void
@@ -79,6 +83,47 @@ class DatabaseSeeder extends Seeder
         Role::factory()->create([
             'name' => 'Administrator'
         ]);
+    }
+
+    private function createUsers(int $quantity = 1): void
+    {
+        User::truncate();
+        User::factory()->create([
+            'name' => 'Aleksander',
+            'surname' => 'Grzesiak',
+            'email' => 'aleksander2115@gmail.com',
+        ]);
+        User::factory()->create([
+            'name' => 'Mikołaj',
+            'surname' => 'Cieśliczka',
+            'email' => 'mikolajce@gmail.com',
+        ]);
+        User::factory()->create([
+            'name' => 'Grzegorz',
+            'surname' => 'Knapik',
+            'email' => 'siemano@gmail.com',
+        ]);
+        User::factory()->create([
+            'name' => 'Grzegorz',
+            'surname' => 'Kubok',
+            'email' => 'kolano@gmail.com',
+        ]);
+        User::factory($quantity-4)->create();
+    }
+
+    private function assignUserRoles(): void
+    {
+        UserRole::truncate();
+        $admins = $this->autoAdmins;
+
+        for($i = 0; $i < User::count(); ++$i){
+            UserRole::factory()->create([
+                'user_id' => $i+1,
+                'role_id' => in_array(User::find($i+1)->surname, $admins)
+                    ? 3
+                    : random_int(1,2)
+            ]);
+        }
     }
 
     private function createPizzas(): void
@@ -109,32 +154,6 @@ class DatabaseSeeder extends Seeder
                 'type' => $tops[$i][1]
             ]);
         }
-    }
-
-    private function createUsers(int $quantity = 1): void
-    {
-        User::truncate();
-        User::factory()->create([
-            'name' => 'Aleksander',
-            'surname' => 'Grzesiak',
-            'email' => 'aleksander2115@gmail.com',
-        ]);
-        User::factory()->create([
-            'name' => 'Mikołaj',
-            'surname' => 'Cieśliczka',
-            'email' => 'mikolajce@gmail.com',
-        ]);
-        User::factory()->create([
-            'name' => 'Grzegorz',
-            'surname' => 'Knapik',
-            'email' => 'siemano@gmail.com',
-        ]);
-        User::factory()->create([
-            'name' => 'Grzegorz',
-            'surname' => 'Kubok',
-            'email' => 'kolano@gmail.com',
-        ]);
-        User::factory($quantity-4)->create();
     }
 
     private function createOrders(int $quantity = 1): void
@@ -172,18 +191,13 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function assignUserRoles(): void
+    private function updateAllOrderCosts()
     {
-        UserRole::truncate();
-        $admins = $this->autoAdmins;
+        $orderUpdater = new OrderController();
 
-        for($i = 0; $i < User::count(); ++$i){
-            UserRole::factory()->create([
-                'user_id' => $i+1,
-                'role_id' => in_array(User::find($i+1)->surname, $admins)
-                    ? 3
-                    : random_int(1,2)
-            ]);
+        for($i = 0; $i < Order::count(); ++$i)
+        {
+            $orderUpdater->updateCostOfOrder($i+1);
         }
     }
 

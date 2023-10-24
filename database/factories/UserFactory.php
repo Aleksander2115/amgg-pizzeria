@@ -18,7 +18,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->firstName(),
             'surname' => fake()->lastName(),
             'phone_number' => fake()->numberBetween(500000000, 700000000),
             'city' => fake()->city(),
@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'street_number' => fake()->numberBetween(1,300),
             'email' => fake()->unique()->email(),
             'login' => fake()->unique()->userName(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+            'password' => bcrypt(fake()->password)
         ];
     }
 

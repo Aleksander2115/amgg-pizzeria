@@ -32,9 +32,23 @@
             @foreach($pizzas as $pizza)
                 <article>
                     <h1>
-                        <a href="/products/{{ $pizza->id }}">
-                            {{ $pizza->name }} - {{ $pizza->size }}
-                        </a>
+                        {{ $pizza->name }} - {{ $pizza->size }} - {{ $pizza->price }}
+                    </h1>
+                </article>
+            @endforeach
+        @endif
+        @if($toppings === null)
+            <h3>
+                Brak dodatków
+            </h3>
+        @else
+            <h1>
+                Dodatki
+            </h1>
+            @foreach($toppings as $topping)
+                <article>
+                    <h1>
+                        {{ $topping->name }}
                     </h1>
                 </article>
             @endforeach

@@ -4,7 +4,6 @@ use App\Http\Controllers\
 {
     AdminController,
     AuthController,
-    MainController,
     OrderController
 };
 use Illuminate\Support\Facades\Route;
@@ -23,54 +22,51 @@ use Illuminate\Support\Facades\Route;
 //App::getRouter()->setDefaultRoute('Main_page'); #default action
 //App::getRouter()->setLoginRoute('login'); #action to forward if no permissions
 
-//Utils::addRoute('Main_page', 'Main_pageCtrl');
-Route::get('/', [MainController::class, 'welcome']);
+Route::get('/', fn() => view('home'));
 
-//Utils::addRoute('login', 'LoginCtrl');
-Route::get('/login' , [AuthController::class, 'login']);
+Route::controller(AuthController::class)->group(function()
+{
+    Route::get('/login' , 'login');
 
-//Utils::addRoute('logout', 'LoginCtrl');
-Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', 'logout');
 
-//Utils::addRoute('registry', 'RegistrationCtrl');
-Route::get('/register', [AuthController::class, 'register']);
+    Route::get('/register', 'register');
 
-//Utils::addRoute('NewRegistration', 'RegistrationCtrl');
-Route::get('/newuser', [AuthController::class, 'newRegistration']);
+    Route::get('/newuser', 'newRegistration');
 
-//Utils::addRoute('showLogin', 'LoginCtrl');
-Route::get('/showlogin', [AuthController::class, 'showLogin']);
+    Route::get('/showlogin', 'showLogin');
+});
 
-//Utils::addRoute('adminRoleList', 'AdminCtrl', ["Admin"]);
-Route::get('/admin/rolelist', [AdminController::class, 'roleList']);
+Route::controller(AdminController::class)->group(function ()
+{
+    Route::get('/admin/rolelist', 'roleList');
 
-//Utils::addRoute('adminDelete', 'AdminCtrl', ["Admin"]);
-Route::get('/admin/delete', [AdminController::class, 'delete']);
+    Route::get('/admin/delete', 'delete');
 
-//Utils::addRoute('adminAdd', 'AdminCtrl', ["Admin"]);
-Route::get('/admin/new', [AdminController::class, 'new']);
+    Route::get('/admin/new', 'new');
 
-//Utils::addRoute('adminChangeToAdmin', 'AdminCtrl', ["Admin"]);
-Route::get('/admin/makeAdmin', [AdminController::class, 'makeAdmin']);
+    Route::get('/admin/makeAdmin', 'makeAdmin');
 
-//Utils::addRoute('adminChangeToMod', 'AdminCtrl', ["Admin"]);
-Route::get('/admin/makeEmployee', [AdminController::class, 'makeEmployee']);
+    Route::get('/admin/makeEmployee', 'makeEmployee');
 
-//Utils::addRoute('adminChangeToUser', 'AdminCtrl', ["Admin"]);
-Route::get('/admin/makeClient', [AdminController::class, 'makeClient']);
+    Route::get('/admin/makeClient', 'makeClient');
+})
+    ->middleware(['auth']);
 
-//Utils::addRoute('addPizza', 'OrderCtrl', ["User"]);
+Route::controller(OrderController::class)->group(function ()
+{
+    Route::get('/orders', 'allOrders');
 
-//Utils::addRoute('addAddition', 'OrderCtrl', ["User"]);
+    Route::get('/orders/{id}', 'orderDetails');
 
-//Utils::addRoute('showOrders', 'OrderCtrl', ["User"]);
-Route::get('/orders', [OrderController::class, 'allOrders']);
+    Route::get('/menu/pizzas/{id}/add', 'addPizza');
 
-Route::get('/orders/{id}', [OrderController::class, 'orderDetails']);
+    Route::get('/cart/pizza/remove/{id}', 'removePizza');
 
-//Utils::addRoute('deletePizza', 'OrderCtrl', ["User"]);
+    Route::get('/menu/toppings/{id}/add', 'addTopping');
 
-//Utils::addRoute('deleteAddition', 'OrderCtrl', ["User"]);
+    Route::get('/cart/topping/remove/{id}', 'removeTopping');
+});
 
 //Utils::addRoute('orderList', 'ModCtrl', ["Mod"]);
 
