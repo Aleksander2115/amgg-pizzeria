@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[Welcome::class, 'index'])->name('welcome.index');
 
+Route::get('/siema', function (){
+   return view('user',[]);
+});
+
 Route::controller(AuthController::class)->group(function()
 {
     Route::get('/login' , 'login');
