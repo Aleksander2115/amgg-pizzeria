@@ -5,5 +5,5 @@
 <p>
     Lorem ipsum
 </p>
-
+@extends('index')
 @endsection

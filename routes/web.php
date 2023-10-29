@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Controllers\
-{
-    AdminController,
-    AuthController,
-    OrderController
-};
+use App\Http\Controllers\{AdminController, AuthController, OrderController, welcome};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //App::getRouter()->setDefaultRoute('Main_page'); #default action
 //App::getRouter()->setLoginRoute('login'); #action to forward if no permissions
 
-Route::get('/', fn() => view('home'));
+Route::get('/',[Welcome::class, 'index'])->name('welcome.index');
 
 Route::controller(AuthController::class)->group(function()
 {
