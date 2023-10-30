@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $user = User::factory()->create([
             'name' => $request->name,
             'surname' => fake()->lastName(),
             'phone_number' => fake()->numberBetween(500000000, 700000000),
