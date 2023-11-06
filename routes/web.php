@@ -17,12 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
 
-//Route::get('/', function () {
-//    return view('index');
-//});
-
-Route::get('/hello', [\App\Http\Controllers\welcome::class, 'index']);
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
