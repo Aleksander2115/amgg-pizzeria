@@ -14,24 +14,24 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
 
-    private array $pizzaNames = [
-        'Margarita',
-        'Capriciosa',
-        'Italiano',
-        'Neapolitana',
-        'Tomata',
-        'Mexicana',
-        'Salami',
-        'Pepperoni',
-        'Niespodzianka',
-        'Vege'
+    private array $pizzas = [
+        ['Margarita','sos pomidorowy, ser',22],
+        ['Capriciosa','sos pomidorowy, ser, pieczarki',23],
+        ['Italiano', 'sos pomidorowy, ser, bazylia',24],
+        ['Neapolitana', 'sos pomidorowy, ser, szynka',25],
+        ['Tomata', 'sos pomidorowy, ser, pomidory, ketchup',30],
+        ['Mexicana', 'sos pomidorowy, ser, fasola, nachosy, guacamole',32],
+        ['Salami', 'sos pomidorowy, ser, salami, prosciutto, szynka',34],
+        ['Pepperoni', 'sos pomidorowy, ser, pepperoni, papryczka chilli',35],
+        ['Niespodzianka', 'sos pomidorowy, ser, sekret szefa kuchni',40],
+        ['Vege', 'to samo co Margarita',20]
     ];
 
     private array $pizzaSizes = [
-        'Small',
-        'Medium',
-        'Large',
-        'Giga'
+        ['Small', 1],
+        ['Medium', 1.2],
+        ['Large', 1.5],
+        ['Giga', 2]
     ];
 
     private array $pizzaToppings = [
@@ -138,13 +138,13 @@ class DatabaseSeeder extends Seeder
     private function createPizzas(): void
     {
         Pizza::truncate();
-        $names = $this->pizzaNames;
+        $pizzas = $this->pizzas;
 
-        for($i = 0; $i < count($names); ++$i){
-            $basePrice = random_int(20,40);
+        for($i = 0; $i < count($pizzas); ++$i){
             Pizza::factory()->create([
-                'name' => $names[$i],
-                'price' => $basePrice+($i*1.2)
+                'name' => $pizzas[$i][0],
+                'ingredients' => $pizzas[$i][1],
+                'price' => $pizzas[$i][2]
             ]);
         }
     }
@@ -156,7 +156,8 @@ class DatabaseSeeder extends Seeder
 
         for($i = 0; $i < count($sizes); ++$i){
             Size::factory()->create([
-                'name' => $sizes[$i],
+                'name' => $sizes[$i][0],
+                'multiplier' => $sizes[$i][1]
             ]);
         }
     }
@@ -203,10 +204,14 @@ class DatabaseSeeder extends Seeder
     {
         OrderPizza::truncate();
         for($i = 0;$i < $quantity;++$i){
+            $size = Size::inRandomOrder()->first();
+            $pizza = Pizza::inRandomOrder()->first();
+            $price = $size->multiplier * $pizza->price;
             OrderPizza::factory()->create([
                 'order_id' => Order::inRandomOrder()->first()->id,
-                'pizza_id' => Pizza::inRandomOrder()->first()->id,
-                'size_id' => Size::inRandomOrder()->first()->id
+                'pizza_id' => $pizza->id,
+                'size_id' => $size->id,
+                'price' => ceil($price)
             ]);
         }
     }

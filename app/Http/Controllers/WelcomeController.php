@@ -21,8 +21,11 @@ class WelcomeController extends Controller
 
         //dd($pizzaCollection);
 
-        return view('index', ['pizzaCollection'=>$pizzaCollection, 'products'=>$products , 'sizes'=>$sizes, 'toppings'=>$toppings]);
-
+        return view('index', [
+            'pizzaCollection'=>$pizzaCollection,
+            'products'=>$products ,
+            'sizes'=>$sizes,
+            'toppings'=>$toppings
+        ]);
     }
-
 }

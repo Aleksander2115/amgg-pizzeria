@@ -28,6 +28,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('sizes')
                 ->onDelete('cascade');
+            $table->double('price');
         });
     }
 

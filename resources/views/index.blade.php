@@ -3,6 +3,8 @@
 
 @section('content')
 
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <!-- ======= Top Bar ======= -->
     <section id="topbar" class="d-flex align-items-center fixed-top topbar-transparent">
         <div
@@ -243,7 +245,7 @@
 
         <!-- ======= Menu Section ======= -->
         <section id="menu" class="menu">
-            <div class="container">
+            <div class="container" x-data="{ open: false , size: 'medium' }">
 
                 <div class="section-title">
                     <h2>Check our tasty <span>Menu</span></h2>
@@ -252,34 +254,67 @@
                 <div class="row">
                     <div class="col-lg-12 d-flex justify-content-center">
                         <ul id="menu-flters">
-                            <li data-filter="*" class="filter-active">Pokaż wszystko</li>
-                            <li data-filter=".filter-pizza">Pizza</li>
-                            <li data-filter=".filter-salads">Sałatki</li>
-                            <li data-filter=".filter-dodatki">Dodatki</li>
+                            <li data-filter="*" class="filter-active" x-on:click="open = false">Pokaż wszystko</li>
+                            <li data-filter=".filter-pizza" x-on:click="open = true">Pizza</li>
+                            <li data-filter=".filter-salads" x-on:click="open = false">Sałatki</li>
+                            <li data-filter=".filter-dodatki" x-on:click="open = false">Dodatki</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row" x-show="open" x-transition>
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <ul id="menu-flters">
+                            <li x-on:click="size = 'small' ">Small</li>
+                            <li x-on:click="size = 'medium' ">Medium</li>
+                            <li x-on:click="size = 'large' ">Large</li>
+                            <li x-on:click="size = 'giga' ">Giga</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="row menu-container">
-                    @foreach($products as $product )
+                    @foreach($products as $product)
                         <div class="col-lg-6 menu-item filter-pizza">
                             <div class="menu-content">
-                                <a href="#">{{$product->name}}</a><span>
-                                     @foreach($sizes as $v => $size)
-                                    {{$product->price*1*($v+1)}}
-                                    @endforeach
-                                    zł</span>
+                                <a href="#">{{$product->name}}</a>
+                                    <span>
+                                        <p x-show="size === 'small'">
+                                            @php
+                                                echo ceil($product->price * $sizes[0]->multiplier)
+                                            @endphp
+                                            zł
+                                        </p>
+                                        <p x-show="size === 'medium'">
+                                            @php
+                                                echo ceil($product->price * $sizes[1]->multiplier)
+                                            @endphp
+                                            zł
+                                        </p>
+                                        <p x-show="size === 'large'">
+                                            @php
+                                                echo ceil($product->price * $sizes[2]->multiplier)
+                                            @endphp
+                                            zł
+                                        </p>
+                                        <p x-show="size === 'giga'">
+                                            @php
+                                                echo ceil($product->price * $sizes[3]->multiplier)
+                                            @endphp
+                                            zł
+                                        </p>
+                                    </span>
                             </div>
                             <div class="menu-ingredients">
-                                d{{$product->size}}d
+                                {{ $product->ingredients }}
                             </div>
                             <div style="display: flex; justify-content: flex-end;">
-                                @foreach($sizes as $size)
-                                    <small>{{$size->name}}</small>
-                                    @if (!$loop->last)
-                                        <small>/</small>
-                                    @endif
-                                @endforeach
+{{--                                @foreach($sizes as $size)--}}
+{{--                                    <small>{{$size->name}}</small>--}}
+{{--                                    @if (!$loop->last)--}}
+{{--                                        <small>/</small>--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
                             </div>
                         </div>
 
