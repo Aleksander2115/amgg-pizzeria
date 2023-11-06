@@ -1,10 +1,12 @@
 @extends('template-home')
 
-@section('body')
+
+@section('content')
 
     <!-- ======= Top Bar ======= -->
     <section id="topbar" class="d-flex align-items-center fixed-top topbar-transparent">
-        <div class="container-fluid container-xl d-flex align-items-center justify-content-center justify-content-lg-start">
+        <div
+            class="container-fluid container-xl d-flex align-items-center justify-content-center justify-content-lg-start">
             <i class="bi bi-phone d-flex align-items-center"><span>+48 202-303-404</span></i>
             <i class="bi bi-clock ms-4 d-none d-lg-flex align-items-center"><span>Pon-Czw: 12:00 - 22:00  |  Pt-Nd: 12:00 - 00:00 </span></i>
         </div>
@@ -30,10 +32,12 @@
                     <li><a class="nav-link scrollto" href="#events">Wydarzenia</a></li>
                     <li><a class="nav-link scrollto" href="#chefs">Kucharze</a></li>
                     <li><a class="nav-link scrollto" href="#gallery">Zdjęcia</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('profile.index') }}">{{ __('Konto') }}</a></li>
                     <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                        class="bi bi-chevron-right"></i></a>
                                 <ul>
                                     <li><a href="#">Deep Drop Down 1</a></li>
                                     <li><a href="#">Deep Drop Down 2</a></li>
@@ -257,17 +261,31 @@
                 </div>
 
                 <div class="row menu-container">
-                    @foreach($products as $prod )
+                    @foreach($products as $product )
                         <div class="col-lg-6 menu-item filter-pizza">
                             <div class="menu-content">
-                                <a href="#">{{$prod->name}}</a><span>{{$prod->price}}zł</span>
+                                <a href="#">{{$product->name}}</a><span>
+                                     @foreach($sizes as $v => $size)
+                                    {{$product->price*1*($v+1)}}
+                                    @endforeach
+                                    zł</span>
                             </div>
                             <div class="menu-ingredients">
-                                {{$prod->size}}
+                                d{{$product->size}}d
+                            </div>
+                            <div style="display: flex; justify-content: flex-end;">
+                                @foreach($sizes as $size)
+                                    <small>{{$size->name}}</small>
+                                    @if (!$loop->last)
+                                        <small>/</small>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
 
                     @endforeach
+
+
                     @foreach($toppings as $topp )
                         <div class="col-lg-6 menu-item filter-dodatki">
                             <div class="menu-content">
@@ -931,31 +949,6 @@
 
     </main><!-- End #main -->
 
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-        <div class="container">
-            <h3>Delicious</h3>
-            <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi
-                placeat.</p>
-            <div class="social-links">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-            <div class="copyright">
-                &copy; Copyright <strong><span>Delicious</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </div>
-    </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

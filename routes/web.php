@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
+Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('index');
+//});
 
 Route::get('/hello', [\App\Http\Controllers\welcome::class, 'index']);
 

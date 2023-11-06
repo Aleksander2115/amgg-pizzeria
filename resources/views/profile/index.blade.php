@@ -1,40 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('template')
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Inner Page - Delicious Bootstrap Template</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,600,600i,700,700i|Satisfy|Comic+Neue:300,300i,400,400i,700,700i" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-    * Template Name: Delicious
-    * Updated: Sep 18 2023 with Bootstrap v5.3.2
-    * Template URL: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/
-    * Author: BootstrapMade.com
-    * License: https://bootstrapmade.com/license/
-    ======================================================== -->
-</head>
+@section('content')
 
 <body>
 
@@ -94,26 +61,105 @@
 
 <main id="main">
 
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Konto</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Konto</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs Section -->
+
+
+    <body>
+
+    <style>
+        .sidebar {
+            margin-left: 10%;
+            margin-top: 3%;
+            width: 15%;
+        }
+
+        .textField{
+            min-width: 40%;
+            min-height: 100%;
+            margin-left: 5%;
+            margin-top: 3%;
+            background-color: #f6f6f8;
+            border-radius: 1%;
+        }
+
+    </style>
+
+
+
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="bord bg-white sidebar" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light"></div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">User</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" data-filter=".filter-pizza">Status</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" data-filter=".filter-pizza">Status1</a>
+
+
+
+            </div>
+        </div>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper " class="textField">
+
+
+
+            <div class="col-lg-6 menu-item filter-pizza">
+
+                hejo
+            </div>
+
+            <div class="col-lg-6 menu-item filter-miza">
+
+                hejo
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            ppp
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            pp
+
+        </div>
+    </div>
+
+    </body>
+
 
     @yield('content')
 
 </main><!-- End #main -->
-<style>
-    .footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-    }
-</style>
-<!-- ======= Footer ======= -->
-<footer id="footer" class="footer" >
-    <div class="container">
-        <h3>Pizzeria...</h3>
-        <div class="copyright">
-            &copy; Copyright <strong><span>My</span></strong>
-        </div>
-    </div>
-</footer><!-- End Footer -->
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -130,3 +176,4 @@
 </body>
 
 </html>
+@endsection
