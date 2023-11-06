@@ -245,7 +245,7 @@
 
         <!-- ======= Menu Section ======= -->
         <section id="menu" class="menu">
-            <div class="container" x-data="{ open: false , size: 'medium' }">
+            <div class="container" x-data="{ openpizzas: false , size: 'medium' }">
 
                 <div class="section-title">
                     <h2>Check our tasty <span>Menu</span></h2>
@@ -254,21 +254,34 @@
                 <div class="row">
                     <div class="col-lg-12 d-flex justify-content-center">
                         <ul id="menu-flters">
-                            <li data-filter="*" class="filter-active" x-on:click="open = false">Pokaż wszystko</li>
-                            <li data-filter=".filter-pizza" x-on:click="open = true">Pizza</li>
-                            <li data-filter=".filter-salads" x-on:click="open = false">Sałatki</li>
-                            <li data-filter=".filter-dodatki" x-on:click="open = false">Dodatki</li>
+                            <li data-filter="*"
+                                x-on:click="openpizzas = false"
+                            >Pokaż wszystko</li>
+                            <li data-filter=".filter-pizza" class="filter-active"
+                                x-on:click="openpizzas = true"
+                            >Pizza</li>
+                            <li data-filter=".filter-toppings"
+                                x-on:click="openpizzas = false"
+                            >Dodatki</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="row" x-show="open" x-transition>
+                <div class="row" x-show="openpizzas" x-transition:>
                     <div class="col-lg-12 d-flex justify-content-center">
                         <ul id="menu-flters">
-                            <li x-on:click="size = 'small' ">Small</li>
-                            <li x-on:click="size = 'medium' ">Medium</li>
-                            <li x-on:click="size = 'large' ">Large</li>
-                            <li x-on:click="size = 'giga' ">Giga</li>
+                            <li data-filter=".filter-pizza" x-on:click="size = 'small' ">
+                                {{ $sizes[0]->name }}
+                            </li>
+                            <li data-filter=".filter-pizza" x-on:click="size = 'medium' ">
+                                {{ $sizes[1]->name }}
+                            </li>
+                            <li data-filter=".filter-pizza" x-on:click="size = 'large' ">
+                                {{ $sizes[2]->name }}
+                            </li>
+                            <li data-filter=".filter-pizza" x-on:click="size = 'giga' ">
+                                {{ $sizes[3]->name }}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -277,31 +290,22 @@
                     @foreach($products as $product)
                         <div class="col-lg-6 menu-item filter-pizza">
                             <div class="menu-content">
-                                <a href="#">{{$product->name}}</a>
+                                <a href="add-small" x-show="size === 'small'">{{$product->name}}</a>
+                                <a href="add-medium" x-show="size === 'medium'">{{$product->name}}</a>
+                                <a href="add-large" x-show="size === 'large'">{{$product->name}}</a>
+                                <a href="add-giga" x-show="size === 'giga'">{{$product->name}}</a>
                                     <span>
                                         <p x-show="size === 'small'">
-                                            @php
-                                                echo ceil($product->price * $sizes[0]->multiplier)
-                                            @endphp
-                                            zł
+                                            <?= ceil($product->price * $sizes[0]->multiplier)?> zł
                                         </p>
                                         <p x-show="size === 'medium'">
-                                            @php
-                                                echo ceil($product->price * $sizes[1]->multiplier)
-                                            @endphp
-                                            zł
+                                            <?= ceil($product->price * $sizes[1]->multiplier)?> zł
                                         </p>
                                         <p x-show="size === 'large'">
-                                            @php
-                                                echo ceil($product->price * $sizes[2]->multiplier)
-                                            @endphp
-                                            zł
+                                            <?= ceil($product->price * $sizes[2]->multiplier)?> zł
                                         </p>
                                         <p x-show="size === 'giga'">
-                                            @php
-                                                echo ceil($product->price * $sizes[3]->multiplier)
-                                            @endphp
-                                            zł
+                                            <?= ceil($product->price * $sizes[3]->multiplier)?> zł
                                         </p>
                                     </span>
                             </div>
@@ -322,7 +326,7 @@
 
 
                     @foreach($toppings as $topp )
-                        <div class="col-lg-6 menu-item filter-dodatki">
+                        <div class="col-lg-6 menu-item filter-toppings">
                             <div class="menu-content">
                                 <a href="#">{{$topp->name}}</a><span>{{$topp->type}}</span>
                             </div>
@@ -330,9 +334,7 @@
                                 ESSA
                             </div>
                         </div>
-
-                    @endforeach
-
+                        @endforeach
                 </div>
 
             </div>
