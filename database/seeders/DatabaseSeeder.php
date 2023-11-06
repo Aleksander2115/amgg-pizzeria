@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
             $basePrice = random_int(20,40);
             Pizza::factory()->create([
                 'name' => $names[$i],
-                'price' => $basePrice+($i*5)
+                'price' => $basePrice+($i*1.2)
             ]);
         }
     }
