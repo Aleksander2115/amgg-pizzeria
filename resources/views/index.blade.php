@@ -274,27 +274,39 @@
                 </div>
 
                 <div class="row menu-container">
-                    @foreach($products as $product )
+                    @foreach($products as $product)
                         <div class="col-lg-6 menu-item filter-pizza">
                             <div class="menu-content">
                                 <a href="#">{{$product->name}}</a>
                                     <span>
                                         <p x-show="size === 'small'">
-                                            {{$product->price}} zł
+                                            @php
+                                                echo ceil($product->price * $sizes[0]->multiplier)
+                                            @endphp
+                                            zł
                                         </p>
                                         <p x-show="size === 'medium'">
-                                            {{$product->price*1.2}} zł
+                                            @php
+                                                echo ceil($product->price * $sizes[1]->multiplier)
+                                            @endphp
+                                            zł
                                         </p>
                                         <p x-show="size === 'large'">
-                                            {{$product->price*1.5}} zł
+                                            @php
+                                                echo ceil($product->price * $sizes[2]->multiplier)
+                                            @endphp
+                                            zł
                                         </p>
                                         <p x-show="size === 'giga'">
-                                            {{$product->price*2}} zł
+                                            @php
+                                                echo ceil($product->price * $sizes[3]->multiplier)
+                                            @endphp
+                                            zł
                                         </p>
                                     </span>
                             </div>
                             <div class="menu-ingredients">
-                                d{{$product->size}}d
+                                {{ $product->ingredients }}
                             </div>
                             <div style="display: flex; justify-content: flex-end;">
 {{--                                @foreach($sizes as $size)--}}
