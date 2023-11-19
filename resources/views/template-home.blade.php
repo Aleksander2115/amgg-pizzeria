@@ -43,7 +43,7 @@
             <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
         </div>
         <div class="copyright">
-            &copy; Copyright <strong><span>My</span></strong>
+            &copy; Copyright <strong><span>My mother</span></strong>
         </div>
 
     </div>

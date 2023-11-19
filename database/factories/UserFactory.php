@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->email(),
             'login' => fake()->unique()->userName(),
             'password' => bcrypt(fake()->password)
+//            'password' => 'siema'
         ];
     }
 

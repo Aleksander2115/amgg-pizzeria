@@ -20,7 +20,7 @@
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Delicious</a></h1>
+                <h1><a href="/">Delicious</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -30,35 +30,40 @@
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                     <li><a class="nav-link scrollto" href="#about">O nas</a></li>
                     <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
-                    <li><a class="nav-link scrollto" href="#specials">Popularne</a></li>
-                    <li><a class="nav-link scrollto" href="#events">Wydarzenia</a></li>
-                    <li><a class="nav-link scrollto" href="#chefs">Kucharze</a></li>
+{{--                    <li><a class="nav-link scrollto" href="#specials">Popularne</a></li>--}}
+{{--                    <li><a class="nav-link scrollto" href="#events">Wydarzenia</a></li>--}}
+{{--                    <li><a class="nav-link scrollto" href="#chefs">Kucharze</a></li>--}}
                     <li><a class="nav-link scrollto" href="#gallery">Zdjęcia</a></li>
-                    <li><a class="nav-link scrollto" href="{{ route('profile.index') }}">{{ __('Konto') }}</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                        class="bi bi-chevron-right"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                        </ul>
-                    </li>
+                    @auth
+                        <li><a class="nav-link scrollto" href="{{ route('logout') }}">Wyloguj sie</a></li>
+                    @endauth
+                    @guest
+                        <li><a class="nav-link scrollto" href="{{ route('profile.index') }}">Zaloguj sie</a></li>
+                    @endguest
+{{--                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>--}}
+{{--                        <ul>--}}
+{{--                            <li><a href="#">Drop Down 1</a></li>--}}
+{{--                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i--}}
+{{--                                        class="bi bi-chevron-right"></i></a>--}}
+{{--                                <ul>--}}
+{{--                                    <li><a href="#">Deep Drop Down 1</a></li>--}}
+{{--                                    <li><a href="#">Deep Drop Down 2</a></li>--}}
+{{--                                    <li><a href="#">Deep Drop Down 3</a></li>--}}
+{{--                                    <li><a href="#">Deep Drop Down 4</a></li>--}}
+{{--                                    <li><a href="#">Deep Drop Down 5</a></li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
+{{--                            <li><a href="#">Drop Down 2</a></li>--}}
+{{--                            <li><a href="#">Drop Down 3</a></li>--}}
+{{--                            <li><a href="#">Drop Down 4</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
                     <li><a class="nav-link scrollto" href="#contact">Kontakt</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <a href="#book-a-table" class="book-a-table-btn scrollto">Złóż Zamówienie !</a>
+            <a href="/cart" class="book-a-table-btn scrollto">Koszyk</a>
 
         </div>
     </header><!-- End Header -->
@@ -290,10 +295,10 @@
                     @foreach($products as $product)
                         <div class="col-lg-6 menu-item filter-pizza">
                             <div class="menu-content">
-                                <a href="add-small" x-show="size === 'small'">{{$product->name}}</a>
-                                <a href="add-medium" x-show="size === 'medium'">{{$product->name}}</a>
-                                <a href="add-large" x-show="size === 'large'">{{$product->name}}</a>
-                                <a href="add-giga" x-show="size === 'giga'">{{$product->name}}</a>
+                                <a href="/addpizza/{{$product->id}}/{{$sizes[0]->id}}" x-show="size === 'small'">{{$product->name}}</a>
+                                <a href="/addpizza/{{$product->id}}/{{$sizes[1]->id}}" x-show="size === 'medium'">{{$product->name}}</a>
+                                <a href="/addpizza/{{$product->id}}/{{$sizes[2]->id}}" x-show="size === 'large'">{{$product->name}}</a>
+                                <a href="/addpizza/{{$product->id}}/{{$sizes[3]->id}}" x-show="size === 'giga'">{{$product->name}}</a>
                                     <span>
                                         <p x-show="size === 'small'">
                                             <?= ceil($product->price * $sizes[0]->multiplier)?> zł
@@ -321,17 +326,12 @@
 {{--                                @endforeach--}}
                             </div>
                         </div>
-
                     @endforeach
 
-
-                    @foreach($toppings as $topp )
+                    @foreach($toppings as $topp)
                         <div class="col-lg-6 menu-item filter-toppings">
                             <div class="menu-content">
-                                <a href="#">{{$topp->name}}</a><span>{{$topp->type}}</span>
-                            </div>
-                            <div class="menu-ingredients">
-                                ESSA
+                                <a href="addtop/{{$topp->id}}">{{$topp->name}}</a><span>{{$topp->type}}</span>
                             </div>
                         </div>
                         @endforeach
