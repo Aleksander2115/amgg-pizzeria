@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\OrderController;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Order;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('auth.login-new');
     }
 
     /**
@@ -28,6 +30,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $request->session()->put('order_id', OrderController::newOrder());
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

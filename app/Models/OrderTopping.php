@@ -10,4 +10,8 @@ class OrderTopping extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function topping(){
+        return $this->belongsTo(Topping::class);
+    }
 }

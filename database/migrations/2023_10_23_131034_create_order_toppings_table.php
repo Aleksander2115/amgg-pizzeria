@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_toppings', function (Blueprint $table) {
+            $table->id()->unique();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('topping_id');
             $table->foreign('order_id')
