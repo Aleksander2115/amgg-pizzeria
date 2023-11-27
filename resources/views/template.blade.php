@@ -26,7 +26,7 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- =======================================================
     * Template Name: Delicious
     * Updated: Sep 18 2023 with Bootstrap v5.3.2
@@ -46,37 +46,17 @@
     </div>
 </section>
 
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top d-flex align-items-center ">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-        <div class="logo me-auto">
-            <h1><a href="/">Delicious</a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-        </div>
-
-        <nav id="navbar" class="navbar order-last order-lg-0">
-            <ul>
-                <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-                <li><a class="nav-link scrollto" href="/#about">O nas</a></li>
-                <li><a class="nav-link scrollto" href="/#menu">Menu</a></li>
-                <li><a class="nav-link scrollto" href="/#contact">Kontakt</a></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-
-    </div>
-</header><!-- End Header -->
 
 <main id="main">
 
+
     @yield('content')
+
 
 </main><!-- End #main -->
 <style>
     .footer {
-        position: absolute;
+        margin-top: auto;
         bottom: 0;
         width: 100%;
     }

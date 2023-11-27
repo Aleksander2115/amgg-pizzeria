@@ -5,20 +5,14 @@
 
 <body>
 
-<!-- ======= Top Bar ======= -->
-<section id="topbar" class="d-flex align-items-center fixed-top ">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-center justify-content-lg-start">
-        <i class="bi bi-phone d-flex align-items-center"><span>+1 5589 55488 55</span></i>
-        <i class="bi bi-clock ms-4 d-none d-lg-flex align-items-center"><span>Mon-Sat: 11:00 AM - 23:00 PM</span></i>
-    </div>
-</section>
+
 
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top d-flex align-items-center ">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
         <div class="logo me-auto">
-            <h1><a href="index.html">Delicious</a></h1>
+            <h1><a href="/">Delicious</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>
@@ -105,7 +99,7 @@
             <div class="sidebar-heading border-bottom bg-light"></div>
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">User</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Zamówienia</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
@@ -123,7 +117,16 @@
 
             <div class="col-lg-6 menu-item filter-pizza">
 
-                hejo
+                Witaj: {{\Illuminate\Support\Facades\Auth::user()->name}}
+
+                <br><br>
+                <p>Dane konta:</p>
+                <p>imie:</p>
+                {{\Illuminate\Support\Facades\Auth::user()->name}}
+                <br>
+                <p>nazwisko:</p>
+                {{\Illuminate\Support\Facades\Auth::user()->surname}}
+
             </div>
 
             <div class="col-lg-6 menu-item filter-miza">

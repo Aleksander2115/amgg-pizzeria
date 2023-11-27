@@ -36,4 +36,6 @@ Route::get('/cart', [OrderController::class, 'orderDetails']);
 Route::get('/cart/finalize',[OrderController::class, 'finalizeOrder']);
 //Route::get('/clearOrder',[OrderController::class, 'clearOrder']);
 
+//cart
+
 require __DIR__.'/auth.php';

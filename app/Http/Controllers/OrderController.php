@@ -63,7 +63,7 @@ class OrderController extends Controller
         $p->save();
 
         self::updateCostOfOrder($order_id);
-        return redirect('/#menu');
+        return redirect('/#menu')->with('message', 'Dodano pizze do koszyka');
     }
 
     public function addTopping(int $topping_id)
@@ -76,7 +76,7 @@ class OrderController extends Controller
         $p->save();
 
         self::updateCostOfOrder($order_id);
-        return redirect('/#menu');
+        return redirect('/#menu')->with('message', 'Dodano dodatek do koszyka');;
     }
 
     public function removePizza(int $pizza_id)
@@ -87,7 +87,7 @@ class OrderController extends Controller
         $pizza->delete();
 
         self::updateCostOfOrder($order_id);
-        return redirect('/cart');
+        return redirect('/cart')->with('message', 'Usunięto pizze z koszyka');;
     }
 
     public function removeTopping(int $topping_id)
@@ -98,7 +98,7 @@ class OrderController extends Controller
         $topping->delete();
 
         self::updateCostOfOrder($order_id);
-        return redirect('/cart');
+        return redirect('/cart')->with('message', 'Usunięto dodatek z pizzy');;
     }
 
     public function clearOrder(){

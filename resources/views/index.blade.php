@@ -2,8 +2,22 @@
 
 
 @section('content')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+    @if(Session::has('message'))
+        <script>
+            Swal.fire({
+                title: "Sukcess",
+                text: "{{ Session::get('message') }}",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500,
+            })
+        </script>
+    @endif
 
     <!-- ======= Top Bar ======= -->
     <section id="topbar" class="d-flex align-items-center fixed-top topbar-transparent">
@@ -36,10 +50,14 @@
                     <li><a class="nav-link scrollto" href="#gallery">Zdjęcia</a></li>
                     @auth
                         <li><a class="nav-link scrollto" href="{{ route('logout') }}">Wyloguj sie</a></li>
+                        <li><a class="nav-link scrollto" href="{{ route('profile.index') }}">Konto użytkownika</a></li>
                     @endauth
                     @guest
                         <li><a class="nav-link scrollto" href="{{ route('profile.index') }}">Zaloguj sie</a></li>
                     @endguest
+
+
+
 {{--                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>--}}
 {{--                        <ul>--}}
 {{--                            <li><a href="#">Drop Down 1</a></li>--}}
@@ -63,7 +81,7 @@
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <a href="/cart" class="book-a-table-btn scrollto">Koszyk</a>
+            <a href="/cart" class="book-a-table-btn scrollto">Koszyk @if($cartCount != 0) {{$cartCount}}@endif<i class="fas fa-shopping-cart"></i></a>
 
         </div>
     </header><!-- End Header -->
@@ -291,10 +309,13 @@
                     </div>
                 </div>
 
+
+
                 <div class="row menu-container">
                     @foreach($products as $product)
                         <div class="col-lg-6 menu-item filter-pizza">
                             <div class="menu-content">
+
                                 <a href="/addpizza/{{$product->id}}/{{$sizes[0]->id}}" x-show="size === 'small'">{{$product->name}}</a>
                                 <a href="/addpizza/{{$product->id}}/{{$sizes[1]->id}}" x-show="size === 'medium'">{{$product->name}}</a>
                                 <a href="/addpizza/{{$product->id}}/{{$sizes[2]->id}}" x-show="size === 'large'">{{$product->name}}</a>
