@@ -4,21 +4,27 @@
 @section('content')
 
     <body>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- ======= Top Bar ======= -->
-    <section id="topbar" class="d-flex align-items-center fixed-top ">
-        <div class="container-fluid container-xl d-flex align-items-center justify-content-center justify-content-lg-start">
-            <i class="bi bi-phone d-flex align-items-center"><span>+1 5589 55488 55</span></i>
-            <i class="bi bi-clock ms-4 d-none d-lg-flex align-items-center"><span>Mon-Sat: 11:00 AM - 23:00 PM</span></i>
-        </div>
-    </section>
+
+    @if(Session::has('message'))
+        <script>
+            Swal.fire({
+                title: "Sukcess",
+                text: "{{ Session::get('message') }}",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500,
+            })
+        </script>
+    @endif
 
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top d-flex align-items-center ">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
             <div class="logo me-auto">
-                <h1><a href="index.html">Delicious</a></h1>
+                <h1><a href="/">Delicious</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -26,12 +32,7 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
                     <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
-                    <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
-                    <li><a class="nav-link scrollto" href="#events">Events</a></li>
-                    <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li>
-                    <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
                     <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a href="#">Drop Down 1</a></li>
@@ -66,10 +67,10 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2>Konto</h2>
+                    <h2>Koszyk</h2>
                     <ol>
                         <li><a href="index.html">Home</a></li>
-                        <li>Konto</li>
+                        <li>Koszyk</li>
                     </ol>
                 </div>
 
@@ -94,11 +95,17 @@
                 border-radius: 1%;
             }
 
+            .yellow{
+                color: #ffa41c;
+            }
+
+
+
         </style>
 
 
 
-        <div class="d-flex" id="wrapper">
+        {{--<div class="d-flex" id="wrapper">
             <!-- Page content wrapper-->
             <div id="page-content-wrapper " class="textField">
                 <div class="col-lg-6 menu-item filter-pizza">
@@ -125,13 +132,103 @@
 
                 <a href="/cart/finalize">Zaplac</a>
 
-{{--                <a href="/clearOrder">WYCZYSC ZAMOWIENIE</a>--}}
+--}}{{--                <a href="/clearOrder">WYCZYSC ZAMOWIENIE</a>--}}{{--
 
                 <div class="col-lg-6 menu-item filter-miza">
 
                 </div>
             </div>
-        </div>
+        </div>--}}
+
+
+
+
+        <section class="pt-5 pb-5">
+            <div class="container">
+                <div class="row w-100">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
+                        <p class="mb-5 text-center">
+                            <i class="text-info font-weight-bold"><span class="yellow">
+                                    3
+                                </span>
+                                    </i> items in your cart</p>
+                        <table id="shoppingCart" class="table table-condensed table-responsive align-middle">
+                            <thead>
+                            <tr>
+                                <th style="width:60%">Product</th>
+                                <th style="width:12%">Price</th>
+                                <th style="width:10%">Quantity</th>
+                                <th style="width:16%"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                @foreach($items as $item)
+
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-md-3 text-left">
+                                            <img src="{{ asset('images/' . $item->pizza->id . '.png') }}" alt="Image" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                        </div>
+                                        <div class="col-md-9 text-left mt-sm-2">
+                                            <h4>{{$item->pizza->name}}</h4>
+                                            <p class="font-weight-light"><span class="yellow">Rozmiar:</span> {{$item->size->name}}
+                                                <p class="yellow">Dodatki:</p>
+                                                @forelse($toppings as $topp)
+                                                    <p>{{ $topp->topping->name }} - 5 zł
+                                                    <a href="/deletetopp/{{ $topp->id }}">
+                                                        <button class="btn btn-white border-secondary bg-white btn-sm mb-2" title="Usuń dodatki">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        </a>
+                                                    </p>
+                                            @empty
+                                                <p>Brak dodatków.</p>
+                                                @endforelse
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td data-th="Price">{{(!str_contains($item->price, '.')) ? $item->price.'.00' : (str_ends_with($item->price,'0') ? $item->price : $item->price.'0')}} zł</td>
+                                <td data-th="Quantity">
+                                    <input type="number" class="form-control form-control-lg text-center" value="1">
+                                </td>
+                                <td class="actions" data-th="">
+                                    <div class="text-right">
+                                        <a href="/deletepizza/{{ $item->id }}">
+                                        <button class="btn btn-white border-secondary bg-white btn-md mb-2" title="Usuń produkt">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <div class="float-right text-right">
+                            <h4>Suma całkowita:</h4>
+
+                            <h1>{{(!str_contains($order->total_cost, '.')) ? $order->total_cost.'.00' : (str_ends_with($order->total_cost,'0') ? $order->total_cost : $order->total_cost.'0')}} zł</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 d-flex align-items-center">
+                    <div class="col-sm-6 order-md-2 text-right">
+                        <a href="/cart/finalize" class="book-a-table-btn scrollto">Zapłać</a>
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
+                        <a href="/">
+                            <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
         </body>
 

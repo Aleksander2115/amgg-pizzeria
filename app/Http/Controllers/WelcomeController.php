@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderPizza;
 use App\Models\Pizza;
 use App\Models\Size;
 use App\Models\Topping;
@@ -18,6 +20,10 @@ class WelcomeController extends Controller
         $toppings= Topping::all();
         $pizzaCollection = collect();
 
+        //cartCount
+        $order_id = session('order_id');
+        $order = Order::find($order_id);
+        $cartCount = OrderPizza::where('order_id', $order_id)->count();
 
         //dd($pizzaCollection);
 
@@ -25,7 +31,8 @@ class WelcomeController extends Controller
             'pizzaCollection'=>$pizzaCollection,
             'products'=>$products ,
             'sizes'=>$sizes,
-            'toppings'=>$toppings
+            'toppings'=>$toppings,
+            'cartCount'=>$cartCount,
         ]);
     }
 }
