@@ -144,11 +144,10 @@ class DatabaseSeeder extends Seeder
     {
         Topping::truncate();
         $tops =  [
-            ['mozzarella cheese', 'Cheese'],
-            ['cheddar cheese', 'Cheese'],
-            ['coca cola', 'Beverage'],
-            ['ham', 'Meat'],
-            ['pepperoni', 'Meat']
+            ['sos czosnkowy', 'Sos'],
+            ['sos pomidorowy', 'Sos'],
+            ['Coca Cola','Napój'],
+            ['Ice Tea','Napój']
         ];
 
         for ($i = 0; $i < count($tops); ++$i) {

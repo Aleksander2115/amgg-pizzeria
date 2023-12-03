@@ -150,7 +150,7 @@
                         <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
                         <p class="mb-5 text-center">
                             <i class="text-info font-weight-bold"><span class="yellow">
-                                    3
+                                @forelse($items as $item) {{$loop->iteration}} @empty No @endforelse
                                 </span>
                                     </i> items in your cart</p>
                         <table id="shoppingCart" class="table table-condensed table-responsive align-middle">
@@ -174,19 +174,6 @@
                                         <div class="col-md-9 text-left mt-sm-2">
                                             <h4>{{$item->pizza->name}}</h4>
                                             <p class="font-weight-light"><span class="yellow">Rozmiar:</span> {{$item->size->name}}
-                                                <p class="yellow">Dodatki:</p>
-                                                @forelse($toppings as $topp)
-                                                    <p>{{ $topp->topping->name }} - 5 zł
-                                                    <a href="/deletetopp/{{ $topp->id }}">
-                                                        <button class="btn btn-white border-secondary bg-white btn-sm mb-2" title="Usuń dodatki">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                        </a>
-                                                    </p>
-                                            @empty
-                                                <p>Brak dodatków.</p>
-                                                @endforelse
-
                                             </p>
                                         </div>
                                     </div>
@@ -209,6 +196,18 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @forelse($toppings as $topp)
+                            <p class="yellow">Dodatki:</p>
+                            <p>{{ $topp->topping->name }} - 5 zł
+                                <a href="/deletetopp/{{ $topp->id }}">
+                                    <button class="btn btn-white border-secondary bg-white btn-sm mb-2" title="Usuń dodatki">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </a>
+                            </p>
+                        @empty
+                            <p>Brak dodatków.</p>
+                        @endforelse
                         <div class="float-right text-right">
                             <h4>Suma całkowita:</h4>
 

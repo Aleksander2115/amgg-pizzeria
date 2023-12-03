@@ -58,7 +58,7 @@
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <a href="#book-a-table" class="book-a-table-btn scrollto">Złóż Zamówienie !</a>
+            <a href="#book-a-table" class="book-a-table-btn scrollto">Koszyk <i class="fas fa-shopping-cart"></i></a>
 
         </div>
     </header><!-- End Header -->
