@@ -129,10 +129,7 @@
 
             </div>
 
-            <div class="col-lg-6 menu-item filter-miza">
 
-                hejo
-            </div>
 
             <br>
             <br>
@@ -143,16 +140,13 @@
             <br>
             <br>
             <br>
-            ppp
             <br>
             <br>
             <br>
             <br>
             <br>
             <br>
-            <br>
-            <br>
-            pp
+
 
         </div>
     </div>

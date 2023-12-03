@@ -131,7 +131,7 @@ class OrderController extends Controller
         $order->save();
 
         self::newOrder();
-        return redirect('/');
+        return redirect('/')->with('message', 'Zamówinie zostało złożone');
     }
 
     public static function updateCostOfOrder(int $order_id)

@@ -26,14 +26,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/addpizza/{idpizza}/{idsize}', [OrderController::class, 'addPizza']);
+    Route::get('/addtop/{idtop}', [OrderController::class, 'addTopping']);
+    Route::get('/deletepizza/{idpizza}', [OrderController::class, 'removePizza']);
+    Route::get('/deletetopp/{idtopping}', [OrderController::class, 'removeTopping']);
+    Route::get('/cart', [OrderController::class, 'orderDetails']);
+    Route::get('/cart/finalize',[OrderController::class, 'finalizeOrder']);
 });
 
-Route::get('/addpizza/{idpizza}/{idsize}', [OrderController::class, 'addPizza']);
-Route::get('/addtop/{idtop}', [OrderController::class, 'addTopping']);
-Route::get('/deletepizza/{idpizza}', [OrderController::class, 'removePizza']);
-Route::get('/deletetopp/{idtopping}', [OrderController::class, 'removeTopping']);
-Route::get('/cart', [OrderController::class, 'orderDetails']);
-Route::get('/cart/finalize',[OrderController::class, 'finalizeOrder']);
 //Route::get('/clearOrder',[OrderController::class, 'clearOrder']);
 
 //cart
